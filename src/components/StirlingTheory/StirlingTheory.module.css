@@ -1,0 +1,42 @@
+/* StirlingTheory.module.css */
+.container {
+ margin-top: 2rem;
+ padding: 1.5rem;
+ background-color: var(--accent-two);
+ border-radius: 8px;
+ font-family: var(--font-jakarta) ;
+ color: var(--text-color);
+ line-height: 1.6;
+}
+
+.heading {
+ font-size: 1.8rem;
+ font-weight: 700;
+ margin-bottom: 1rem;
+ color: var(--text-color);
+}
+
+.formula {
+ padding: 1rem;
+ border-radius: 6px;
+ margin-bottom: 1rem;
+ font-size: 1.2rem;
+ white-space: pre-wrap;
+ background-color: var(--accent-two);
+ border: 1px solid var(--border);
+}
+
+.code {
+ font-family: var(--stix);
+ background-color: var(--accent-two); ;
+}
+
+.list {
+ padding-left: 1.5rem;
+ margin-top: 0.5rem;
+}
+
+
+.listItem {
+ margin-bottom: 0.5rem;
+}
