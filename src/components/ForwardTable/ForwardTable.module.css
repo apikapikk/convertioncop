@@ -6,8 +6,9 @@
 .heading {
  font-size: 1.25rem;
  margin-bottom: 1rem;
- color: #fff;
+ color: var(--text-color);
 }
+
 .table {
  border-collapse: collapse;
  width: 100%;

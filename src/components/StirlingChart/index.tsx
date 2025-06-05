@@ -2,90 +2,57 @@ import React from "react";
 import {
   LineChart,
   Line,
-  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
+  CartesianGrid,
   Scatter,
+  ResponsiveContainer,
 } from "recharts";
 
-interface StirlingChartProps {
-  chartData: { x: number; y: number }[];
-  dataX: number[];
-  dataY: number[][];
-  interpolatedX: number | null;
-  result: number | null;
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export interface StirlingChartProps {
+  chartData: Point[];
+  originalData: Point[];
+  interpolatedPoint: Point | null;
 }
 
 const StirlingChart: React.FC<StirlingChartProps> = ({
   chartData,
-  dataX = [],
-  dataY = [],
-  interpolatedX,
-  result,
+  originalData,
+  interpolatedPoint,
 }) => {
-  // Pastikan dataY dan dataX punya panjang yang cukup untuk akses dataY[0][i]
-  const hasValidData = dataY.length > 0 && dataX.length > 0;
-
   return (
-    <LineChart
-      width={800}
-      height={400}
-      data={chartData}
-      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis
-        dataKey="x"
-        type="number"
-        domain={["auto", "auto"]}
-        label={{ value: "Bulan (x)", position: "insideBottomRight", offset: 0 }}
-      />
-      <YAxis
-        type="number"
-        domain={["auto", "auto"]}
-        label={{ value: "Nilai USD (y)", angle: -90, position: "insideLeft" }}
-      />
-      <Tooltip />
-      <Legend />
+    <div style={{ marginTop: "2rem", width: "100%", height: 400 }}>
+      <ResponsiveContainer>
+        <LineChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="x" />
+          <YAxis />
+          <Tooltip />
 
-      {/* Garis interpolasi */}
-      <Line
-        type="monotone"
-        dataKey="y"
-        stroke="#8884d8"
-        dot={false}
-        name="Interpolasi Stirling"
-        strokeWidth={2}
-      />
+          {/* Garis hasil interpolasi Stirling */}
+          <Line type="monotone" dataKey="y" stroke="#8884d8" dot={false} name="Interpolasi" />
 
-      {/* Titik data asli */}
-      <Scatter
-        data={
-          hasValidData
-            ? dataX.map((x, i) => ({ x, y: dataY[0][i] }))
-            : []
-        }
-        fill="#82ca9d"
-        name="Titik Data Asli"
-      />
+          {/* Titik data asli */}
+          <Scatter data={originalData} fill="#82ca9d" name="Data Asli" />
 
-      {/* Titik interpolasi */}
-      {interpolatedX !== null && result !== null && (
-        <Scatter
-          data={[
-            {
-              x: interpolatedX,
-              y: result,
-            },
-          ]}
-          fill="red"
-          shape="cross"
-          name="Titik Interpolasi"
-        />
-      )}
-    </LineChart>
+          {/* Titik hasil interpolasi */}
+          {interpolatedPoint && (
+            <Scatter
+              data={[interpolatedPoint]}
+              fill="#ff4d4f"
+              name="Titik Interpolasi"
+              shape="star"
+            />
+          )}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
