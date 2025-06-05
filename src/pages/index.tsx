@@ -45,8 +45,12 @@ const HomePage: React.FC = () => {
         curveData.push({ x: xi, y: yi });
       }
       setChartData(curveData);
-    } catch (e: any) {
-      setError(e.message || "Terjadi kesalahan");
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError("Terjadi kesalahan");
+      }
       setResult(null);
       setDataX([]);
       setDataY([]);
